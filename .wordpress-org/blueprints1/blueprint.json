@@ -1,0 +1,56 @@
+{
+    "landingPage": "/wp-admin/admin.php?page=serve_static_settings",
+  "preferredVersions": {
+    "php": "8.0",
+    "wp": "latest"
+  },
+  "phpExtensionBundles": [
+    "kitchen-sink"
+  ],
+  "features": {
+    "networking": true
+  },
+  "steps": [
+    {
+      "step": "login",
+      "username": "admin",
+      "password": "password"
+    },
+    {
+      "step": "installPlugin",
+      "pluginZipFile": {
+        "resource": "wordpress.org/plugins",
+        "slug": "serve_static"
+      },
+      "progress": {
+        "weight": 2
+      }
+    },
+    {
+        "step": "installTheme",
+        "themeZipFile": {
+            "resource": "wordpress.org\/themes",
+            "slug": "astra"
+        }
+    },
+    {
+        "step": "setSiteOptions",
+        "options": {
+            "serve_static_master_key": 1,
+            "serve_static_make_static": 1,
+            "serve_static_html_minify_enabled": 1,
+            "serve_static_css_minify_enabled": 1,
+            "serve_static_js_minify_enabled": 1,
+            "serve_static_fallback_method": 0,
+            "serve_static_requests_interval": 0,
+            "permalink_structure": "/%postname%/",
+            "fs_active_plugins": 0
+        }
+    },
+    {
+        "step": "runPHP",
+        "code": "<?php require_once 'wordpress/wp-load.php'; wp_insert_post(array('post_title' => 'This is just a preview of the admin settings. No frontend optimizations will work here.', 'post_status' => 'publish')); ?>"
+    }
+
+  ]
+}
